@@ -56,7 +56,7 @@ const AppointmentContainer = () => {
 		if (data?.length && !loaded) {
 			setLoaded(true);
 		}
-	}, [data])
+	}, [data, loaded])
 
 	if (isLoading && !loaded) {
 		return <Spinner />
