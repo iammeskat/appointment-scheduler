@@ -3,6 +3,7 @@ import InputText from 'components/core/InputText';
 import { auth } from 'config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import useCreatePeople from 'hooks/people/useCreatePeople';
+import { Loader2, LogIn } from 'lucide-react';
 import React, { useState } from 'react';
 import { Button } from 'shadcn/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'shadcn/ui/card';
@@ -86,8 +87,19 @@ const Signup = ({
 							</div>
 							<Input id="password" type="password" required />
 						</div> */}
-						<Button type="submit" className="w-full">
-							Create an account
+						<Button
+							type="submit"
+							className="w-full"
+							disabled={isLoading}
+						>
+							{isLoading ? (
+								<Loader2 className="size-4 mr-1 animate-spin" />
+							) : (
+								<LogIn className="size-4 mr-1" />
+							)}
+							<span>
+								Create an account
+							</span>
 						</Button>
 					</div>
 					<div className="mt-4 text-center text-sm font-medium text-slate-600">

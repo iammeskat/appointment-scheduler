@@ -46,7 +46,7 @@ const CreateAppointmentModal = ({
 				id: peopleData?.id || ''
 			},
 		}
-		const res = await createAppointment(payload);
+		await createAppointment(payload);
 		handleClose();
 	}
 	return (

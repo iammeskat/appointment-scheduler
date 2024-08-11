@@ -76,7 +76,7 @@ const AppointmentCard = ({
 						</>
 					) : (isUpcoming ?
 						<>
-							{status != "declined" &&
+							{status !== "declined" &&
 								<Button
 									size="sm"
 									variant="destructive"
@@ -85,7 +85,7 @@ const AppointmentCard = ({
 									Decline
 								</Button>
 							}
-							{status != "accepted" &&
+							{status !== "accepted" &&
 								<Button
 									size="sm"
 									onClick={() => handleUpdateStatus("accepted", data)}
