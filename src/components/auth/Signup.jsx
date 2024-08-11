@@ -6,13 +6,14 @@ import useCreatePeople from 'hooks/people/useCreatePeople';
 import { Loader2, LogIn } from 'lucide-react';
 import React, { useState } from 'react';
 import { Button } from 'shadcn/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'shadcn/ui/card';
+import { Card, CardContent, CardDescription, CardHeader } from 'shadcn/ui/card';
 import { getEventNameValue } from 'utils/helpers';
 
 const Signup = ({
 	switchToLogin = () => { }
 }) => {
 	const [formData, setFormData] = useState({});
+	const [error, setError] = useState('');
 	const { createPeople, isLoading } = useCreatePeople();
 	const handleOnChange = (event) => {
 		const { name, value } = getEventNameValue(event);
@@ -20,6 +21,9 @@ const Signup = ({
 			...prevData,
 			[name]: value
 		}))
+		if(error){
+			setError('')
+		}
 	}
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
@@ -36,6 +40,7 @@ const Signup = ({
 			})
 			.catch(error => {
 				console.log({ error })
+				setError(error?.code)
 			});
 	};
 
@@ -43,15 +48,20 @@ const Signup = ({
 		<form onSubmit={handleOnSubmit}>
 			<Card className="mx-auto max-w-sm">
 				<CardHeader>
-					<CardTitle className="text-2xl font-bold">
+					<h3 className="text-2xl font-bold">
 						Sign Up
-					</CardTitle>
+					</h3>
 					<CardDescription className="font-medium">
 						Enter your information to create an account
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<div className="grid gap-4">
+						{error &&
+							<div className='w-full border p-2 rounded bg-orange-50 border-orange-300 text-orange-500'>
+								{error}
+							</div>
+						}
 						<InputText
 							label="Full Name"
 							placeholder="Enter full name"

@@ -1,4 +1,5 @@
 import InputText from 'components/core/InputText';
+import Spinner from 'components/Spinner';
 import useGetPeoples from 'hooks/people/useGetPeoples';
 import React, { useState } from 'react';
 import CreateAppointmentModal from './components/CreateAppointmentModal';
@@ -24,7 +25,9 @@ const PeopleContainer = () => {
 		setSelectedPeople(null);
 	}
 
-
+	if (isLoading) {
+		return <Spinner />
+	}
 	return (
 		<div className='w-full flex flex-col gap-4'>
 			<InputText
@@ -32,7 +35,6 @@ const PeopleContainer = () => {
 				value={search}
 				onChange={e => setSearch(e.target.value)}
 			/>
-			{isLoading ? "Loading.." : ""}
 			<ul className='flex flex-col gap-2'>
 				{filteredUsers.map(people => (
 					<li key={people.id}>
@@ -43,6 +45,11 @@ const PeopleContainer = () => {
 					</li>
 				))}
 			</ul>
+			{filteredUsers?.length < 1 &&
+				<p className='text-center text-xl font-medium'>
+					No data found
+				</p>
+			}
 			<CreateAppointmentModal
 				opened={opened}
 				onClose={handleCloseModal}
