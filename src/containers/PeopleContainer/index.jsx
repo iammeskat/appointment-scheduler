@@ -1,6 +1,7 @@
 import InputText from 'components/core/InputText';
 import Spinner from 'components/Spinner';
 import useGetPeoples from 'hooks/people/useGetPeoples';
+import useIsLoggedin from 'hooks/useIsLoggedin';
 import React, { useState } from 'react';
 import CreateAppointmentModal from './components/CreateAppointmentModal';
 import PeopleCard from './components/PeopleCard';
@@ -8,6 +9,7 @@ import PeopleCard from './components/PeopleCard';
 const PeopleContainer = () => {
 	const [search, setSearch] = useState('');
 	const [opened, setOpened] = useState(false);
+	const { user = {} } = useIsLoggedin();
 	const [selectedPeople, setSelectedPeople] = useState(null);
 	const { data: peoples, isLoading } = useGetPeoples();
 	const filteredUsers = peoples.filter(({ email = '', name = '' }) => (
@@ -37,12 +39,13 @@ const PeopleContainer = () => {
 			/>
 			<ul className='flex flex-col gap-2'>
 				{filteredUsers.map(people => (
-					<li key={people.id}>
-						<PeopleCard
-							data={people}
-							createAppointment={handleOpenModal}
-						/>
-					</li>
+					user?.people?.id === people?.id ? "" :
+						<li key={people.id}>
+							<PeopleCard
+								data={people}
+								createAppointment={handleOpenModal}
+							/>
+						</li>
 				))}
 			</ul>
 			{filteredUsers?.length < 1 &&

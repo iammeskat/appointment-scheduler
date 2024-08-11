@@ -5,6 +5,7 @@ import useCreateAppointment from 'hooks/appointment/useCreateAppointment'
 import useIsLoggedin from 'hooks/useIsLoggedin'
 import { CalendarPlus2, Loader2, Send, X } from 'lucide-react'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button } from 'shadcn/ui/button'
 import { DialogFooter } from 'shadcn/ui/dialog'
 import { getEventNameValue } from 'utils/helpers'
@@ -17,6 +18,7 @@ const CreateAppointmentModal = ({
 	const [formData, setFormData] = useState({});
 	const { createAppointment, isLoading } = useCreateAppointment();
 	const { user = {} } = useIsLoggedin();
+	const navigate = useNavigate();
 
 	const handleClose = () => {
 		setFormData({});
@@ -47,6 +49,7 @@ const CreateAppointmentModal = ({
 			},
 		}
 		await createAppointment(payload);
+		navigate("/appointments")
 		handleClose();
 	}
 	return (

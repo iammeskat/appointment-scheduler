@@ -74,7 +74,7 @@ const AppointmentCard = ({
 								</Button>
 							}
 						</>
-					) : (isUpcoming ?
+					) : ((isUpcoming && (status !== "cancelled")) ?
 						<>
 							{status !== "declined" &&
 								<Button
